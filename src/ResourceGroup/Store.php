@@ -16,6 +16,7 @@ use RetailCrm\Api\Model\Request\Store\PricesUploadRequest;
 use RetailCrm\Api\Model\Request\Store\ProductBatchEditRequest;
 use RetailCrm\Api\Model\Request\Store\ProductGroupsRequest;
 use RetailCrm\Api\Model\Request\Store\ProductPropertiesRequest;
+use RetailCrm\Api\Model\Request\Store\ProductsBatchCreateRequest;
 use RetailCrm\Api\Model\Request\Store\ProductsRequest;
 use RetailCrm\Api\Model\Response\Store\InventoriesResponse;
 use RetailCrm\Api\Model\Response\Store\InventoriesUploadResponse;
@@ -491,5 +492,16 @@ class Store extends AbstractApiResourceGroup
         );
 
         return $response;
+    }
+
+    public function productsBatchCreate(ProductsBatchCreateRequest $request): ProductsBatchCreateResponse
+    {
+        /** @var ProductsBatchCreateResponse $response */
+        $response = $this->sendRequest(
+            RequestMethod::POST,
+            'store/products/batch/create',
+            $request,
+            ProductsBatchCreateResponse::class
+        );
     }
 }
