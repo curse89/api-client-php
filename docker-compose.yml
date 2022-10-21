@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: .docker/dev/php/Dockerfile
+      args:
+        - NEED_DEBUG=${NEED_DEBUG:-1}
+    user: ${UID:-1000}:${GID:-1000}
+    command: make run
+    ports:
+      - "80:9000"
+    volumes:
+      - ./:/api
+    environment:
+      COMPOSER_HOME: /tmp
+      PHP_IDE_CONFIG: "serverName=DevServer"
+    working_dir: /api
+    container_name: api_app
