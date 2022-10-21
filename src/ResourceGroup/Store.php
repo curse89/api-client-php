@@ -24,6 +24,7 @@ use RetailCrm\Api\Model\Response\Store\PricesUploadResponse;
 use RetailCrm\Api\Model\Response\Store\ProductBatchEditResponse;
 use RetailCrm\Api\Model\Response\Store\ProductGroupsResponse;
 use RetailCrm\Api\Model\Response\Store\ProductPropertiesResponse;
+use RetailCrm\Api\Model\Response\Store\ProductsBatchCreateResponse;
 use RetailCrm\Api\Model\Response\Store\ProductsResponse;
 
 /**
@@ -494,6 +495,63 @@ class Store extends AbstractApiResourceGroup
         return $response;
     }
 
+    /**
+     * Makes POST "/api/v5/store/products/batch/create" request.
+     *
+     * Example:
+     * ```php
+     * use RetailCrm\Api\Model\Entity\Store\ProductEditGroupInput;
+     * use RetailCrm\Api\Model\Entity\Store\ProductCreateInput;
+     * use RetailCrm\Api\Model\Request\Store\ProductsBatchCreateRequest;
+     * use RetailCrm\Api\Factory\SimpleClientFactory;
+     * use RetailCrm\Api\Interfaces\ApiExceptionInterface;
+     *
+     * $client = SimpleClientFactory::createClient('https://test.retailcrm.pro', 'apiKey');
+     *
+     * $productInput = new ProductCreateInput();
+     * $productInput->name = 'testName';
+     * $productInput->description = 'testDescription';
+     * $productInput->active = true;
+     * $productInput->url = 'testUrl';
+     * $productInput->article = 'testArticle';
+     * $productInput->catalogId = 10;
+     * $productInput->externalId = 'testExternalId';
+     * $productInput->manufacturer = 'testManufacturer';
+     * $productInput->markable = true;
+     * $productInput->novelty = true;
+     * $productInput->popular = true;
+     * $productInput->recommended = true;
+     * $productInput->stock = true;
+     * $productEditGroupInput = new ProductEditGroupInput();
+     * $productEditGroupInput->externalId = 'testExternalId';
+     * $productEditGroupInput->id = 10;
+     * $productInput->groups[] = $productEditGroupInput;
+     *
+     * try {
+     *     $response = $client->store->productsBatchCreate(new ProductsBatchCreateRequest([$productInput]));
+     * } catch (ApiExceptionInterface $exception) {
+     *     echo sprintf(
+     *         'Error from RetailCRM API (status code: %d): %s',
+     *         $exception->getStatusCode(),
+     *         $exception->getMessage()
+     *     );
+     *     if (count($exception->getErrorResponse()->errors) > 0) {
+     *         echo PHP_EOL . 'Errors: ' . implode(', ', $exception->getErrorResponse()->errors);
+     *     }
+     *     return;
+     * }
+     *
+     * echo 'Processed product count: ' . $response->processedProductsCount;
+     * ```
+     *
+     * @param ProductsBatchCreateRequest $request
+     *
+     * @return ProductsBatchCreateResponse
+     * @throws \RetailCrm\Api\Exception\ApiException
+     * @throws \RetailCrm\Api\Exception\ClientException
+     * @throws \RetailCrm\Api\Exception\Client\HandlerException
+     * @throws \RetailCrm\Api\Interfaces\ApiExceptionInterface
+     */
     public function productsBatchCreate(ProductsBatchCreateRequest $request): ProductsBatchCreateResponse
     {
         /** @var ProductsBatchCreateResponse $response */
@@ -503,5 +561,7 @@ class Store extends AbstractApiResourceGroup
             $request,
             ProductsBatchCreateResponse::class
         );
+
+        return $response;
     }
 }
