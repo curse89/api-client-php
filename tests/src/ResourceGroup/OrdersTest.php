@@ -36,6 +36,7 @@ use RetailCrm\Api\Model\Entity\Orders\SerializedRelationCustomer;
 use RetailCrm\Api\Model\Filter\Orders\OrderFilter;
 use RetailCrm\Api\Model\Filter\Orders\OrderHistoryFilterV4Type;
 use RetailCrm\Api\Model\Request\BySiteRequest;
+use RetailCrm\Api\Model\Request\Orders\OrderDeliveryCancelRequest;
 use RetailCrm\Api\Model\Request\Orders\OrderLoyaltyCancelBonusOperationsRequest;
 use RetailCrm\Api\Model\Request\Orders\OrdersCombineRequest;
 use RetailCrm\Api\Model\Request\Orders\OrdersCreateRequest;
@@ -8834,6 +8835,30 @@ EOF;
 
         $client   = TestClientFactory::createClient($mock->getClient());
         $response = $client->orders->edit('8123522898559160', $request);
+
+        self::assertModelEqualsToResponse($json, $response);
+    }
+
+    public function testDeliveryCancel(): void
+    {
+        $json = <<<'EOF'
+{
+  "success": true
+}
+EOF;
+
+        $request = new OrderDeliveryCancelRequest();
+        $request->by = 'externalId';
+        $request->force = true;
+
+        $mock = static::createApiMockBuilder('orders/1/delivery/cancel');
+        $mock->matchMethod(RequestMethod::POST)
+            ->matchQuery(static::encodeFormArray($request))
+            ->reply(200)
+            ->withBody($json);
+
+        $client = TestClientFactory::createClient($mock->getClient());
+        $response = $client->orders->deliveryCancel('1', $request);
 
         self::assertModelEqualsToResponse($json, $response);
     }

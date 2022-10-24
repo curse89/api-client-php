@@ -1158,7 +1158,7 @@ class Orders extends AbstractApiResourceGroup
             RequestMethod::POST,
             'orders/' . $identifier . '/delivery/cancel',
             $request,
-            OrdersCreateResponse::class
+            SuccessResponse::class
         );
 
         return $response;
