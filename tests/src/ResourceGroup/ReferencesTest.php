@@ -6680,6 +6680,7 @@ EOF;
   "success": true,
   "sites": {
     "test": {
+      "id": 100,
       "name": "test",
       "url": "https://example.com",
       "code": "test",
@@ -6705,6 +6706,7 @@ EOF;
       "isDemo": false
     },
     "test-ru": {
+      "id": 101,
       "catalogId": "81",
       "isCatalogMainSite": true,
       "isDemo": true,
