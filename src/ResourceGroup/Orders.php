@@ -1163,4 +1163,15 @@ class Orders extends AbstractApiResourceGroup
 
         return $response;
     }
+
+    //TODO: доделать, протестировать
+    public function platesPrint(string $identifier, int $plateId)
+    {
+        $this->sendRequest(
+            RequestMethod::GET,
+            'orders/' . $identifier . '/plates/' . $plateId . '/print',
+            null,
+            ''
+        );
+    }
 }
