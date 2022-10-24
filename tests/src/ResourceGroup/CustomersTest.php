@@ -177,6 +177,20 @@ class CustomersTest extends AbstractApiResourceGroupTestCase
         {
           "number": "89229112322"
         }
+      ],
+      "mgCustomers": [
+        {
+          "id": 1,
+          "externalId": 100,
+          "mgChannel": {
+            "id": 1,
+            "externalId": 100,
+            "type": "experimental",
+            "active": true,
+            "name": "CursedApp",
+            "allowedSendByPhone": false
+          }
+        }
       ]
     }
   ]
@@ -2634,6 +2648,20 @@ EOF;
       },
       {
         "number": "+79094055044"
+      }
+    ],
+    "mgCustomers": [
+      {
+        "id": 1,
+        "externalId": 100,
+        "mgChannel": {
+          "id": 1,
+          "externalId": 100,
+          "type": "experimental",
+          "active": true,
+          "name": "CursedApp",
+          "allowedSendByPhone": false
+        }
       }
     ]
   }

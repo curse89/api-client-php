@@ -36,9 +36,9 @@ class MGCustomer
     public $externalId;
 
     /**
-     * @var \RetailCrm\Api\Model\Entity\Customers\MGChannel[]
+     * @var \RetailCrm\Api\Model\Entity\Customers\MGChannel
      *
-     * @JMS\Type("array<RetailCrm\Api\Model\Entity\Customers\MGChannel>")
+     * @JMS\Type("RetailCrm\Api\Model\Entity\Customers\MGChannel")
      * @JMS\SerializedName("mgChannel")
      */
     public $mgChannel;
