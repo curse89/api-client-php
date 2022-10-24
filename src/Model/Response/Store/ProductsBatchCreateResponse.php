@@ -9,6 +9,7 @@
 
 namespace RetailCrm\Api\Model\Response\Store;
 
+use RetailCrm\Api\Component\Serializer\Annotation as JMS;
 use RetailCrm\Api\Model\Response\SuccessResponse;
 
 /**
