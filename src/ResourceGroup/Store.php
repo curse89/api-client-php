@@ -15,6 +15,7 @@ use RetailCrm\Api\Model\Request\Store\InventoriesUploadRequest;
 use RetailCrm\Api\Model\Request\Store\PricesUploadRequest;
 use RetailCrm\Api\Model\Request\Store\ProductBatchEditRequest;
 use RetailCrm\Api\Model\Request\Store\ProductGroupsCreateRequest;
+use RetailCrm\Api\Model\Request\Store\ProductGroupsEditRequest;
 use RetailCrm\Api\Model\Request\Store\ProductGroupsRequest;
 use RetailCrm\Api\Model\Request\Store\ProductPropertiesRequest;
 use RetailCrm\Api\Model\Request\Store\ProductsBatchCreateRequest;
@@ -349,6 +350,66 @@ class Store extends AbstractApiResourceGroup
         $response = $this->sendRequest(
             RequestMethod::POST,
             'store/product-groups/create',
+            $request,
+            IdResponse::class
+        );
+
+        return $response;
+    }
+
+    /**
+     * Makes POST "/api/v5/store/product-groups/{externalId}/edit" request.
+     *
+     * Example:
+     * ```php
+     * use RetailCrm\Api\Model\Entity\Store\SerializedProductGroup;
+     * use RetailCrm\Api\Model\Request\Store\ProductGroupsEditRequest;
+     * use RetailCrm\Api\Factory\SimpleClientFactory;
+     * use RetailCrm\Api\Interfaces\ApiExceptionInterface;
+     *
+     * $client = SimpleClientFactory::createClient('https://test.retailcrm.pro', 'apiKey');
+     *
+     * $productGroup = new SerializedProductGroup();
+     * $productGroup->name = 'TestGroup';
+     * $productGroup->description = 'Test group of products';
+     * $productGroup->externalId = 'xxx-001';
+     * $productGroup->active = true;
+     *
+     * try {
+     *     $response = $client->store->productGroupsEdit(
+     *         new ProductGroupsEditRequest($productGroup, 'externalId', 'test_site')
+     *     );
+     * } catch (ApiExceptionInterface $exception) {
+     *     echo sprintf(
+     *         'Error from RetailCRM API (status code: %d): %s',
+     *         $exception->getStatusCode(),
+     *         $exception->getMessage()
+     *     );
+     *     if (count($exception->getErrorResponse()->errors) > 0) {
+     *         echo PHP_EOL . 'Errors: ' . implode(', ', $exception->getErrorResponse()->errors);
+     *     }
+     *     return;
+     * }
+     *
+     * echo 'Product group create result: ' . $response->success;
+     * echo 'Product group id: ' . $response->id;
+     * ```
+     *
+     * @param string|int $identifier
+     * @param ProductGroupsEditRequest $request
+     *
+     * @return IdResponse
+     * @throws \RetailCrm\Api\Exception\ApiException
+     * @throws \RetailCrm\Api\Exception\ClientException
+     * @throws \RetailCrm\Api\Exception\Client\HandlerException
+     * @throws \RetailCrm\Api\Interfaces\ApiExceptionInterface
+     */
+    public function productGroupsEdit($identifier, ProductGroupsEditRequest $request): IdResponse
+    {
+        /** @var IdResponse $response */
+        $response = $this->sendRequest(
+            RequestMethod::POST,
+            'store/product-groups/' . $identifier . '/edit',
             $request,
             IdResponse::class
         );
