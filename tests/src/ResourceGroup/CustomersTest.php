@@ -2485,7 +2485,15 @@ EOF;
   "uploadedCustomers": [{
     "id": 1,
     "externalId": "test_10"
-  }]
+  }],
+  "failedCustomers": [
+    {
+        "externalId": "100"
+    },
+    {
+        "externalId": "101"
+    }
+  ]
 }
 EOF;
 

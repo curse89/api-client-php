@@ -8073,7 +8073,15 @@ EOF;
       "test_number": 0,
       "otpravit_dozakaz": false
     }
-  }]
+  }],
+  "failedOrders": [
+    {
+        "externalId": "100"
+    },
+    {
+        "externalId": "101"
+    }
+  ]
 }
 EOF;
 
