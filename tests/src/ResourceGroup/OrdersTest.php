@@ -8870,4 +8870,25 @@ EOF;
 
         self::assertModelEqualsToResponse($json, $response);
     }
+
+    public function testPlatesPrint(): void
+    {
+        $fileData = 'test data';
+        $request = new BySiteRequest();
+        $request->by = 'id';
+        $request->site = 'gray_site';
+
+        $mock = static::createApiMockBuilder('orders/100/plates/18/print');
+        $mock->matchMethod(RequestMethod::GET)
+            ->matchQuery(static::encodeFormArray($request))
+            ->reply(200)
+            ->withHeader('Content-Disposition', 'attachment; filename="filename.pdf"')
+            ->withBody($fileData);
+
+        $client = TestClientFactory::createClient($mock->getClient());
+        $response = $client->orders->platesPrint(100, 18, $request);
+
+        self::assertEquals('filename.pdf', $response->fileName);
+        self::assertEquals($fileData, $response->data->getContents());
+    }
 }

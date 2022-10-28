@@ -24,6 +24,7 @@ use RetailCrm\Api\Model\Request\Orders\OrdersPaymentsCreateRequest;
 use RetailCrm\Api\Model\Request\Orders\OrdersRequest;
 use RetailCrm\Api\Model\Request\Orders\OrdersStatusesRequest;
 use RetailCrm\Api\Model\Request\Orders\OrdersUploadRequest;
+use RetailCrm\Api\Model\Response\Files\FilesDownloadResponse;
 use RetailCrm\Api\Model\Response\IdResponse;
 use RetailCrm\Api\Model\Response\Orders\OrdersCombineResponse;
 use RetailCrm\Api\Model\Response\Orders\OrdersCreateResponse;
@@ -1164,14 +1165,60 @@ class Orders extends AbstractApiResourceGroup
         return $response;
     }
 
-    //TODO: доделать, протестировать
-    public function platesPrint(string $identifier, int $plateId)
+    /**
+     * Makes GET "/api/v5/orders/{externalId}/plates/{plateId}/print" request.
+     *
+     * Example:
+     * ```php
+     * use RetailCrm\Api\Factory\SimpleClientFactory;
+     * use RetailCrm\Api\Interfaces\ApiExceptionInterface;
+     * use RetailCrm\Api\Model\Request\BySiteRequest;
+     *
+     * $client = SimpleClientFactory::createClient('https://test.retailcrm.pro', 'apiKey');
+     *
+     * try {
+     *     $request = new BySiteRequest();
+     *     $request = new BySiteRequest('id', 'gray_sale_ym');
+     *
+     *     $response = $client->orders->platesPrint(100, 18, $request);
+     * } catch (ApiExceptionInterface $exception) {
+     *     echo sprintf(
+     *         'Error from RetailCRM API (status code: %d): %s',
+     *         $exception->getStatusCode(),
+     *         $exception->getMessage()
+     *     );
+     *
+     *     if (count($exception->getErrorResponse()->errors) > 0) {
+     *         echo PHP_EOL . 'Errors: ' . implode(', ', $exception->getErrorResponse()->errors);
+     *     }
+     *
+     *     return;
+     * }
+     *
+     * printf('Saving downloaded file to "%s."', $response->fileName);
+     * file_put_contents($response->fileName, $response->data->getContents());
+     * ```
+     *
+     * @param string|int $identifier
+     * @param int $plateId
+     * @param BySiteRequest|null $request
+     *
+     * @return FilesDownloadResponse
+     * @throws \RetailCrm\Api\Exception\ApiException
+     * @throws \RetailCrm\Api\Exception\ClientException
+     * @throws \RetailCrm\Api\Exception\Client\HandlerException
+     * @throws \RetailCrm\Api\Interfaces\ApiExceptionInterface
+     */
+    public function platesPrint($identifier, int $plateId, BySiteRequest $request): FilesDownloadResponse
     {
-        $this->sendRequest(
+        /** @var FilesDownloadResponse $response */
+        $response = $this->sendRequest(
             RequestMethod::GET,
             'orders/' . $identifier . '/plates/' . $plateId . '/print',
-            null,
+            $request,
             ''
         );
+
+        return $response;
     }
 }
