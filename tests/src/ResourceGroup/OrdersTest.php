@@ -8853,7 +8853,7 @@ EOF;
 
         $mock = static::createApiMockBuilder('orders/1/delivery/cancel');
         $mock->matchMethod(RequestMethod::POST)
-            ->matchQuery(static::encodeFormArray($request))
+            ->matchBody(static::encodeForm($request))
             ->reply(200)
             ->withBody($json);
 
