@@ -1201,7 +1201,7 @@ class Orders extends AbstractApiResourceGroup
      *
      * @param string|int $identifier
      * @param int $plateId
-     * @param BySiteRequest|null $request
+     * @param BySiteRequest $request
      *
      * @return FilesDownloadResponse
      * @throws \RetailCrm\Api\Exception\ApiException

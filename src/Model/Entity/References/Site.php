@@ -27,7 +27,7 @@ class Site
      * @JMS\SerializedName("id")
      */
     public $id;
-    
+
     /**
      * @var string
      *
