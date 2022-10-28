@@ -377,6 +377,7 @@ class Store extends AbstractApiResourceGroup
      *
      * try {
      *     $response = $client->store->productGroupsEdit(
+     *         111,
      *         new ProductGroupsEditRequest($productGroup, 'externalId', 'test_site')
      *     );
      * } catch (ApiExceptionInterface $exception) {
